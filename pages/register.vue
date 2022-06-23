@@ -63,8 +63,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: ["guest"],
+});
 const title = useState("title");
-const router = useRouter();
 const name = ref("");
 const email = ref("");
 const password = ref("");
@@ -89,7 +91,8 @@ async function register() {
       },
     });
     alert("Registered");
-    // router.push('/my-info')
+    const { setUser } = useAuth();
+    setUser(name);
     window.location.pathname = "/my-info";
   } catch (err) {
     console.log(err.data);

@@ -2,9 +2,9 @@
   <div class="bg-gray-100 min-h-screen text-gray-900">
     <Title>{{ title }}</Title>
     <nav class="bg-white shadow text-lg px-6 py-6">
-      <div class="container mx-auto flex items-center justify-between px-6">
+      <div class="container mx-auto flex items-center justify-between px-2">
         <div>
-          <ul class="flex space-x-12">
+          <ul class="flex space-x-10">
             <li><NuxtLink to="/">Home</NuxtLink></li>
             <li><NuxtLink to="/login">Login</NuxtLink></li>
             <li><NuxtLink to="/register">Register</NuxtLink></li>
@@ -24,6 +24,7 @@
 <script setup>
 const title = useState("title", () => "Nuxt 3 Blog");
 const { $apiFetch } = useNuxtApp();
+const { removeUser } = useAuth();
 
 async function logout() {
   try {
@@ -33,6 +34,7 @@ async function logout() {
   } catch (err) {
     console.log("There was a logout error", err.data);
   } finally {
+    removeUser();
     window.location.pathname = "/";
   }
 }

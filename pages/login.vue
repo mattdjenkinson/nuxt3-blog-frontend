@@ -42,6 +42,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: ["guest"],
+});
+
 const title = useState("title");
 const email = ref("");
 const password = ref("");
@@ -62,7 +66,12 @@ async function login() {
         password: password.value,
       },
     });
-    // router.push('/my-info')
+
+    const user = await $apiFetch("/api/user");
+
+    const { setUser } = useAuth();
+    setUser(user.name);
+
     window.location.pathname = "/my-info";
   } catch (err) {
     console.log(err.data);
